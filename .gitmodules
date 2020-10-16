@@ -1,0 +1,3 @@
+[submodule "embed2spec"]
+	path = embed2spec
+	url = https://github.com/sam-dixon/embed2spec
