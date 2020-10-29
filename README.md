@@ -19,12 +19,6 @@ and activate it
 conda activate embed2spec
 ```
 
-We also require the latest version of `sncosmo` (not yet pip/conda installable). You can install it from source with
-```
-pip install git+https://github.com/sncosmo/sncosmo.git
-```
-You need at least v2.2.0.
-
 ## Contents
 
 * embed2roman.py - WIP - produce Roman prism-like 1D spectra for a collection of embedding parameters.
