@@ -12,11 +12,15 @@
 
 Create a new `conda` environment with 
 ```
-conda env create -f embed2spec/environment.yml
+conda env create -f environment.yml
 ```
 and activate it
 ```
-conda activate embed2spec
+conda activate embed2roman
+```
+Install the `embed2spec` package with
+```
+pip install git+https://github.com/sam-dixon/embed2spec.git
 ```
 
 ## Contents

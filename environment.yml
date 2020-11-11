@@ -1,0 +1,17 @@
+name: embed2roman
+channels:
+  - pytorch
+  - defaults
+  - conda-forge
+dependencies:
+  - pytorch
+  - numpy
+  - pandas
+  - matplotlib
+  - pip
+  - jupyter
+  - jupyterlab
+  - iminuit
+  - sncosmo>=2.2.0
+  - pip:
+    - extinction

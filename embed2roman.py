@@ -1,7 +1,7 @@
 """ embed2roman.py - produce Roman prism-like spectra from a given SNIa embedding parameters.
 """
 
-from embed2spec.source import TwinsEmbedding, SNF_BANDS
+from embed2spec import TwinsEmbedding, SNF_BANDS
 
 
 #From David
