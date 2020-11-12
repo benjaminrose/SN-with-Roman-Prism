@@ -12,11 +12,11 @@
 
 Create a new `conda` environment with 
 ```
-conda env create -f embed2spec/environment.yml
+conda env create -f environment.yml
 ```
 and activate it
 ```
-conda activate embed2spec
+conda activate embed2roman
 ```
 
 ## Contents
