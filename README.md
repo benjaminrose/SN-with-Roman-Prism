@@ -18,6 +18,7 @@ and activate it
 ```
 conda activate embed2roman
 ```
+The environment can be updated via `conda env update -f environment.yml`.
 
 ## Contents
 
