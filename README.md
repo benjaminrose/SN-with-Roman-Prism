@@ -18,10 +18,6 @@ and activate it
 ```
 conda activate embed2roman
 ```
-Install the `embed2spec` package with
-```
-pip install git+https://github.com/sam-dixon/embed2spec.git
-```
 
 ## Contents
 
