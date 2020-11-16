@@ -24,7 +24,9 @@ def build_lc(**params):
     model.set(**params)
 
     phases = np.arange(-10, 40, 3)
-    wave = np.arange(4000, 8000)
+    # TwinsEmbedding is defined from ~3300--8600 AA restframe
+    # Softcoding is better, since I want full wavelength range
+    wave = np.arange(model.minwave(), model.maxwave())
 
     flux = model.flux(wave=wave, time=phases)
     spectrum = sncosmo.Spectrum(wave, flux[0, :], time=phases[0])
