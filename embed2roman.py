@@ -3,9 +3,13 @@
 
 import numpy as np
 import sncosmo
+import pandas as pd
+import matplotlib.pyplot as plt
+# import seaborn as sns
 
 from embed2spec import TwinsEmbedding, SNF_BANDS
 
+# sns.set(context="talk", style="ticks", font="serif", color_codes=True)
 
 # From David
 # Normalize the SN spectra to -19.1 (+-), then model.flux should be in ergs/cm^2/s/A. That flux can be divided by the “noise” column in the file to make a S/N.
@@ -80,6 +84,24 @@ def embed2roman(**params):
     # return model, flux, spectrum
     return model, spec_true, spec_roman
 
+
+def plot(true, obs, save_fig=False):
+    print(min(true.flux), max(true.flux), np.mean(true.flux))
+    print(min(obs.flux), max(obs.flux))
+
+    fig, ax = plt.subplots(tight_layout=True)
+    # obs is divided by ~ 10-19 error, we need to rescale true.
+    ax.plot(true.wave, true.flux/(10**(-19)), label=r"Truth divided by $10^{-19}$")
+    ax.plot(obs.wave, obs.flux, label="Obs")
+    ax.set_ylabel("?")
+    ax.set_xlabel("Wavelength (Ang)")
+    plt.legend()
+    if save_fig:
+        plt.savefig(save_fig)
+    else:
+        plt.show()
+
+
 if __name__ == "__main__":
 
     model, spec_true, spec_roman = embed2roman(
@@ -93,3 +115,6 @@ if __name__ == "__main__":
 
     print(spec_true.bandflux("sdssz"))
     print(spec_roman.bandflux("sdssz"))
+
+    plot(spec_true, spec_roman, 'spec.pdf')
+
