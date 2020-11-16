@@ -49,7 +49,7 @@ def embed2roman(**params):
 
         model, spec_true, spec_roman = embed2roman(
             z=0.8,
-            dm=35 + np.random.randn(),
+            dm=43 + np.random.randn(),
             av=np.random.randn() + 1,
             xi1=np.random.randn(),
             xi2=np.random.randn(),
@@ -109,8 +109,8 @@ def plot(true, obs, save_fig=False):
 if __name__ == "__main__":
 
     model, spec_true, spec_roman = embed2roman(
-        z=0.8,
-        dm=35 + np.random.randn(),  # What is this ?
+        z=1,
+        dm=43 + np.random.randn(),  # What is this ?
         av=np.random.randn() + 1,
         xi1=np.random.randn(),
         xi2=np.random.randn(),
