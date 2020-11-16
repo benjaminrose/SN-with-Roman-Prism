@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 from embed2spec import TwinsEmbedding, SNF_BANDS
 
 # sns.set(context="talk", style="ticks", font="serif", color_codes=True)
-
+np.random.seed(419235820)
 ROMAN_PRISM_DATA = pd.read_csv(
     "AB_25_1hour.txt", sep="\s+", names=["wave", "SNR", "signal", "noise"], header=0
 )
@@ -99,6 +99,7 @@ def plot(true, obs, save_fig=False):
     ax.plot(obs.wave, obs.flux, label="Obs")
     ax.set_ylabel("?")
     ax.set_xlabel("Wavelength (Ang)")
+    ax.set_title(f"Redshift 1")
     plt.legend()
     if save_fig:
         plt.savefig(save_fig)
