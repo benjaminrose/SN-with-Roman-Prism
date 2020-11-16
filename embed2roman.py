@@ -14,14 +14,44 @@ ROMAN_PRISM_DATA = pd.read_csv(
     "AB_25_1hour.txt", sep="\s+", names=["wave", "SNR", "signal", "noise"], header=0
 )
 
-def build_lc(**params):
-    """Creates a light curve with the given model parameters.
+def embed2roman(**params):
+    """Generate spectra (noiseless & Roman prism-like) for the given model parameters.
 
-    From Sam Dixon.
+    Parameters
+    ----------
+    **params:
+        parameters for the sncosmo.Model, such as redshift.
 
-    Returns:
-            model: `sncosmo.Model` object with the input parameters set.
-            lc: `dict` with necessary keys for use in `sncosmo`.
+    spectrum: sncosmo.Spectrum
+        Noiseless source spectra, observer frame
+
+    obs_time: float
+        Not implimented. Convert from AB_25_1hour.txt to proper S/N given expsure time.
+
+    Returns
+    -------
+    sncosmo.Model
+        The SNCosmo TwinsEmbedding source model object with the input parameters set
+
+    sncosmo.Spectrum
+        Noiseless truth spectrum 
+
+    sncosmo.Spectrum
+        Spectrum with noise and resolution characteristics of the Roman ST prism
+
+    Example
+    -------
+
+    Call this function like::
+    
+        model, spec_true, spec_roman = embed2roman(
+            z=0.8,
+            dm=35 + np.random.randn(),
+            av=np.random.randn() + 1,
+            xi1=np.random.randn(),
+            xi2=np.random.randn(),
+            xi3=np.random.randn(),
+        )
     """
     model = sncosmo.Model(source=TwinsEmbedding())
     model.set(**params)
