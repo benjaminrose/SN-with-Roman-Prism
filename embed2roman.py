@@ -96,10 +96,11 @@ def embed2roman(obs_time=3600, **params):
     # then model.flux should be in ergs/cm^2/s/A.
     flux_roman = model.flux(wave=wave_roman, time=phases)
 
-    # That flux can be divided by the “noise” column in the file to make a S/N.
+    # That flux + obs_noise can be divided by the “noise” column in the file to make a S/N.
     spec_roman = sncosmo.Spectrum(
         wave_roman,
-        flux_roman[0, :] / noise_roman,
+        (flux_roman[0, :] + noise_roman * np.random.randn(len(wave_roman)))
+        / noise_roman,
         time=phases[0],
     )
 
