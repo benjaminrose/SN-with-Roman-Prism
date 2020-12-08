@@ -116,7 +116,7 @@ def plot(true, obs, save_fig=False):
     # obs is divided by ~ 10-19 error, we need to rescale true.
     ax.plot(true.wave, true.flux / (10 ** (-19)), label=r"Truth divided by $10^{-19}$")
     ax.plot(obs.wave, obs.flux, label="Obs")
-    ax.set_ylabel("?")
+    ax.set_ylabel("Signal-to-Noise (per resolution element)")
     ax.set_xlabel("Wavelength (Ang)")
     ax.set_title(f"Redshift 1")
     plt.legend()
