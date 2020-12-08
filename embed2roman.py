@@ -1,5 +1,11 @@
 """ embed2roman.py - produce Roman prism-like spectra from a given SNIa embedding parameters.
+
+# SNR scalling
+
+Noise scales proportioanl to (time)**(-1/2) due to poisson noise.
+SNCosmo's output handles cosmological dimming.
 """
+import warnings
 
 import numpy as np
 import sncosmo
@@ -17,19 +23,22 @@ ROMAN_PRISM_DATA = pd.read_csv(
 )
 
 
-def embed2roman(**params):
+def embed2roman(obs_time=3600, **params):
     """Generate spectra (noiseless & Roman prism-like) for the given model parameters.
 
     Parameters
     ----------
+    obs_time: float
+        In seconds. Converts from AB_25_1hour.txt to proper S/N given an
+        exposure time in seconds.
+
     **params:
         parameters for the sncosmo.Model, such as redshift.
 
     spectrum: sncosmo.Spectrum
         Noiseless source spectra, observer frame
 
-    obs_time: float
-        Not implimented. Convert from AB_25_1hour.txt to proper S/N given expsure time.
+
 
     Returns
     -------
@@ -56,6 +65,12 @@ def embed2roman(**params):
             xi3=np.random.randn(),
         )
     """
+    if obs_time < 200:
+        warnings.warn(
+            f"Observation time (obs_time) is in seconds. Value of {obs_time} appears to not.",
+            RuntimeWarning,
+        )
+
     model = sncosmo.Model(source=TwinsEmbedding())
     model.set(**params)
 
@@ -68,6 +83,10 @@ def embed2roman(**params):
         ROMAN_PRISM_DATA["wave"].values < model.maxwave()
     )
     wave_roman = ROMAN_PRISM_DATA.loc[wave_union, "wave"].values
+    # Scale 1hr exposure noise via Poisson statistics
+    noise_roman = ROMAN_PRISM_DATA.loc[wave_union, "noise"].values * (
+        obs_time / 3600
+    ) ** (-1 / 2)
 
     flux_true = model.flux(wave=wave_full, time=phases)
     spec_true = sncosmo.Spectrum(wave_full, flux_true[0, :], time=phases[0])
@@ -80,7 +99,7 @@ def embed2roman(**params):
     # That flux can be divided by the “noise” column in the file to make a S/N.
     spec_roman = sncosmo.Spectrum(
         wave_roman,
-        flux_roman[0, :] / ROMAN_PRISM_DATA.loc[wave_union, "noise"].values,
+        flux_roman[0, :] / noise_roman,
         time=phases[0],
     )
 
